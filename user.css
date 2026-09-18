@@ -147,6 +147,23 @@ section:has(img[src*="liked-songs"]) .main-entityHeader-contentWrapper {
   display: none !important;
 }
 
+/* ---- Switch to video button  ----------------------
+   Two rules fight over this button. Spotify fills it with a translucent white
+   wash, and Spicy Lyrics re-asserts the same wash with !important through
+   `body:has(aside.spicy-dynamic-bg-in-this) ... button`, which outranks a plain
+   class selector. Match that selector and add the button's own class so this
+   wins on specificity. The wash is kept for :hover so the button still reacts. */
+.main-nowPlayingView-actionButton,
+body:has(aside.spicy-dynamic-bg-in-this)
+  .main-nowPlayingView-actionButtonContainer button.main-nowPlayingView-actionButton {
+  background-color: #000000 !important;
+}
+.main-nowPlayingView-actionButton:hover,
+body:has(aside.spicy-dynamic-bg-in-this)
+  .main-nowPlayingView-actionButtonContainer button.main-nowPlayingView-actionButton:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 /* ===========================================================================
    8. Spotify chrome and add-on tweaks
    ======================================================================== */
