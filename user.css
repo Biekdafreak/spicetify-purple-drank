@@ -37,12 +37,13 @@
 
 /* ===========================================================================
    2. Flat look: square corners, no drop shadows, no frosted blur
-   The Spicy Lyrics page is excluded — its lyric rendering is built on blur and
-   rounded/shadowed layers, and flattening them leaves the page blank.
+   The Spicy Lyrics and Biekdafreak Lyrics pages are excluded — their lyric
+   rendering is built on blur and rounded/shadowed layers, and flattening them
+   leaves the page blank or squares off its round controls.
    ======================================================================== */
-*:not(#SpicyLyricsPage, #SpicyLyricsPage *),
-*:not(#SpicyLyricsPage *)::before,
-*:not(#SpicyLyricsPage *)::after {
+*:not(#SpicyLyricsPage, #SpicyLyricsPage *, #bfly-page, #bfly-page *),
+*:not(#SpicyLyricsPage *, #bfly-page *)::before,
+*:not(#SpicyLyricsPage *, #bfly-page *)::after {
   border-radius: 0 !important;
   box-shadow: none !important;
   text-shadow: none !important;
@@ -232,16 +233,19 @@ aside .spicy-dynamic-bg {
   --cover-ambience-color-before: #744DA9 !important;
 }
 
-/* ---- Readable Spicy Lyrics page buttons on light purple -------------------- */
-#SpicyLyricsPage .ViewControls .ViewControl {
+/* ---- Readable Spicy Lyrics / Biekdafreak Lyrics page buttons on light purple */
+#SpicyLyricsPage .ViewControls .ViewControl,
+#bfly-page .bfl-cbtn {
   color: #2E1A47 !important;
   background: rgba(255, 255, 255, 0.45) !important;
 }
-#SpicyLyricsPage .ViewControls .ViewControl:hover {
+#SpicyLyricsPage .ViewControls .ViewControl:hover,
+#bfly-page .bfl-cbtn:hover {
   color: #1A0F2B !important;
   background: rgba(255, 255, 255, 0.65) !important;
 }
-#SpicyLyricsPage .ViewControls .ViewControl svg {
+#SpicyLyricsPage .ViewControls .ViewControl svg,
+#bfly-page .bfl-cbtn svg {
   color: inherit !important;
   opacity: 1 !important;
 }
