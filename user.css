@@ -6,13 +6,19 @@
 
 /* ===========================================================================
    1. Palette
+   Every colour the theme uses is named here. To make your own variant, change
+   these values; the image tint in section 4 is the one thing set separately.
    ======================================================================== */
 :root {
-  --pd-purple: #744DA9;
-  --pd-purple-light: #8764B8;
-  --pd-purple-dark: #5B3A8C;
-  --pd-purple-deep: #2E1A47;
-  --pd-lavender: #9D7FD1;
+  --pd-purple: #744DA9;        /* the accent: top bar, cards, buttons */
+  --pd-purple-light: #8764B8;  /* active buttons */
+  --pd-purple-hover: #6A45A0;  /* top bar tiles, hovered */
+  --pd-purple-dark: #5B3A8C;   /* top bar tiles */
+  --pd-purple-press: #4B2F75;  /* top bar tiles, pressed */
+  --pd-purple-deep: #2E1A47;   /* icons on the light lyrics page */
+  --pd-purple-ink: #1A0F2B;    /* the same icons, hovered */
+  --pd-lavender: #9D7FD1;      /* Spicy Lyrics page background */
+  --pd-lavender-pale: #E6DDF3; /* search box placeholder text */
   --pd-black: #000000;
   --pd-grey: #3F3F3F;
   --pd-red: #E81123;
@@ -37,13 +43,12 @@
 
 /* ===========================================================================
    2. Flat look: square corners, no drop shadows, no frosted blur
-   The Spicy Lyrics and Biekdafreak Lyrics pages are excluded — their lyric
-   rendering is built on blur and rounded/shadowed layers, and flattening them
-   leaves the page blank or squares off its round controls.
+   The Spicy Lyrics page is excluded: its lyric rendering is built on blur and
+   rounded/shadowed layers, and flattening them leaves the page blank.
    ======================================================================== */
-*:not(#SpicyLyricsPage, #SpicyLyricsPage *, #bfly-page, #bfly-page *),
-*:not(#SpicyLyricsPage *, #bfly-page *)::before,
-*:not(#SpicyLyricsPage *, #bfly-page *)::after {
+*:not(#SpicyLyricsPage, #SpicyLyricsPage *),
+*:not(#SpicyLyricsPage *)::before,
+*:not(#SpicyLyricsPage *)::after {
   border-radius: 0 !important;
   box-shadow: none !important;
   text-shadow: none !important;
@@ -63,6 +68,21 @@ button[data-testid="play-button"],
 .volume-bar,
 img {
   border-radius: 0 !important;
+}
+
+/* Progress and volume bars stay flat, but through Spotify's own
+   --progress-bar-radius variable instead of a hard 0, so a snippet that sets
+   it (Marketplace's "Rounded Thicker Bars", for one) can still round them.
+   :not(#SpicyLyricsPage *) adds the ID weight needed to outrank the flat rule
+   above, and leaves Spicy Lyrics alone. */
+.progress-bar:not(#SpicyLyricsPage *) {
+  --progress-bar-radius: 0;
+}
+.x-progressBar-progressBarBg:not(#SpicyLyricsPage *),
+.x-progressBar-sliderArea:not(#SpicyLyricsPage *),
+.x-progressBar-fillColor:not(#SpicyLyricsPage *),
+.x-progressBar-progressFillColor:not(#SpicyLyricsPage *) {
+  border-radius: var(--progress-bar-radius) !important;
 }
 
 /* ===========================================================================
@@ -159,7 +179,7 @@ section:has([data-pd-banner]) .main-entityHeader-contentWrapper {
 .main-nowPlayingView-actionButton,
 body:has(aside.spicy-dynamic-bg-in-this)
   .main-nowPlayingView-actionButtonContainer button.main-nowPlayingView-actionButton {
-  background-color: #000000 !important;
+  background-color: var(--pd-black) !important;
 }
 .main-nowPlayingView-actionButton:hover,
 body:has(aside.spicy-dynamic-bg-in-this)
@@ -178,21 +198,21 @@ body:has(aside.spicy-dynamic-bg-in-this)
    inside the bar recolours exactly the elements that already had a tile. */
 .Root__globalNav,
 .global-nav-bar {
-  background-color: #744DA9 !important;
-  --background-base: #744DA9 !important;
-  --background-elevated-base: #5B3A8C !important;
-  --background-elevated-highlight: #6A45A0 !important;
-  --background-elevated-press: #4B2F75 !important;
-  --background-tinted-base: #5B3A8C !important;
-  --background-tinted-highlight: #6A45A0 !important;
-  --background-tinted-press: #4B2F75 !important;
+  background-color: var(--pd-purple) !important;
+  --background-base: var(--pd-purple) !important;
+  --background-elevated-base: var(--pd-purple-dark) !important;
+  --background-elevated-highlight: var(--pd-purple-hover) !important;
+  --background-elevated-press: var(--pd-purple-press) !important;
+  --background-tinted-base: var(--pd-purple-dark) !important;
+  --background-tinted-highlight: var(--pd-purple-hover) !important;
+  --background-tinted-press: var(--pd-purple-press) !important;
 }
 .Root__globalNav .main-globalNav-searchInputContainer,
 .Root__globalNav .main-globalNav-searchInputContainer input {
-  background-color: #5B3A8C !important;
+  background-color: var(--pd-purple-dark) !important;
 }
 .Root__globalNav .main-globalNav-searchInputContainer input::placeholder {
-  color: #E6DDF3 !important;
+  color: var(--pd-lavender-pale) !important;
 }
 
 /* ---- Light purple Spicy Lyrics page  --------------
@@ -213,7 +233,7 @@ aside .spicy-dynamic-bg {
 .Root__right-sidebar aside,
 .Root__right-sidebar .main-nowPlayingView-section,
 .Root__right-sidebar [class*="nowPlayingView"] {
-  background-color: #000000 !important;
+  background-color: var(--pd-black) !important;
 }
 
 /* Static Background = Color: Spicy Lyrics fills this with a colour taken from
@@ -221,7 +241,7 @@ aside .spicy-dynamic-bg {
    the canvas tint filter above so the purple is shown as-is. */
 #SpicyLyricsPage .spicy-dynamic-bg.ColorBackground,
 #SpicyLyricsPage .spicy-dynamic-bg.StaticBackground {
-  background-color: #9D7FD1 !important;
+  background-color: var(--pd-lavender) !important;
   background-image: none !important;
   filter: none !important;
 }
@@ -231,23 +251,20 @@ aside .spicy-dynamic-bg {
    Pin it to the theme purple; the fade to black still comes from the extension. */
 .main-nowPlayingBar-container,
 [data-testid="now-playing-bar"] > div {
-  --cover-ambience-color: #744DA9 !important;
-  --cover-ambience-color-before: #744DA9 !important;
+  --cover-ambience-color: var(--pd-purple) !important;
+  --cover-ambience-color-before: var(--pd-purple) !important;
 }
 
-/* ---- Readable Spicy Lyrics / Biekdafreak Lyrics page buttons on light purple */
-#SpicyLyricsPage .ViewControls .ViewControl,
-#bfly-page .bfl-cbtn {
-  color: #2E1A47 !important;
+/* ---- Readable Spicy Lyrics page buttons on light purple ------------------- */
+#SpicyLyricsPage .ViewControls .ViewControl {
+  color: var(--pd-purple-deep) !important;
   background: rgba(255, 255, 255, 0.45) !important;
 }
-#SpicyLyricsPage .ViewControls .ViewControl:hover,
-#bfly-page .bfl-cbtn:hover {
-  color: #1A0F2B !important;
+#SpicyLyricsPage .ViewControls .ViewControl:hover {
+  color: var(--pd-purple-ink) !important;
   background: rgba(255, 255, 255, 0.65) !important;
 }
-#SpicyLyricsPage .ViewControls .ViewControl svg,
-#bfly-page .bfl-cbtn svg {
+#SpicyLyricsPage .ViewControls .ViewControl svg {
   color: inherit !important;
   opacity: 1 !important;
 }
