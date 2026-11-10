@@ -5,7 +5,9 @@
 // overlaps its neighbours, so the strip reads as one continuous banner.
 //
 // The header layout (full width, 300px tall, black behind the strip) lives in the
-// theme's user.css; this file only draws the covers.
+// theme's user.css; this file only draws the covers. That layout applies only
+// while the header carries data-pd-banner, so Spotify's own header shows when
+// this script isn't running or has no covers to draw.
 
 (function purpleDrankLikedSongsBanner() {
   const COVER_COUNT = 6;
