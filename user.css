@@ -1,44 +1,29 @@
 /*
  * Biekdafreak - Purple Drank
- * A Spicetify theme: solid black canvas, one purple accent, square edges.
+ * A Spicetify theme: solid black canvas, one accent colour, square edges.
  * https://github.com/Biekdafreak/spicetify-purple-drank
  */
 
 /* ===========================================================================
    1. Palette
-   Every colour the theme uses is named here. To make your own variant, change
-   these values; the image tint in section 4 is the one thing set separately.
+   Everything is worked out from the colour scheme's accent (the "button"
+   colour in color.ini), so picking another scheme, or writing your own,
+   recolours the whole theme. The fallbacks are the original purple.
    ======================================================================== */
 :root {
-  --pd-purple: #744DA9;        /* the accent: top bar, cards, buttons */
-  --pd-purple-light: #8764B8;  /* active buttons */
-  --pd-purple-hover: #6A45A0;  /* top bar tiles, hovered */
-  --pd-purple-dark: #5B3A8C;   /* top bar tiles */
-  --pd-purple-press: #4B2F75;  /* top bar tiles, pressed */
-  --pd-purple-deep: #2E1A47;   /* icons on the light lyrics page */
-  --pd-purple-ink: #1A0F2B;    /* the same icons, hovered */
-  --pd-lavender: #9D7FD1;      /* Spicy Lyrics page background */
-  --pd-lavender-pale: #E6DDF3; /* search box placeholder text */
-  --pd-black: #000000;
-  --pd-grey: #3F3F3F;
-  --pd-red: #E81123;
+  --pd-accent: var(--spice-button, #744DA9);              /* top bar, cards, buttons */
+  --pd-accent-hover: color-mix(in srgb, var(--pd-accent) 91%, black); /* top bar tiles, hovered */
+  --pd-accent-dark: color-mix(in srgb, var(--pd-accent) 78%, black);  /* top bar tiles */
+  --pd-accent-press: color-mix(in srgb, var(--pd-accent) 65%, black); /* top bar tiles, pressed */
+  --pd-accent-deep: color-mix(in srgb, var(--pd-accent) 40%, black);  /* icons on the light lyrics page */
+  --pd-accent-ink: color-mix(in srgb, var(--pd-accent) 23%, black);   /* the same icons, hovered */
+  --pd-tint: color-mix(in srgb, var(--pd-accent) 70%, white);         /* Spicy Lyrics page background */
+  --pd-tint-pale: color-mix(in srgb, var(--pd-accent) 18%, white);    /* search box placeholder text */
+  --pd-black: var(--spice-main, #000000);
 
-  /* Spicetify colour slots, pinned so the OS light/dark setting can't swap them */
-  --spice-text: #FFFFFF !important;
-  --spice-subtext: #BFBFBF !important;
-  --spice-main: var(--pd-black) !important;
-  --spice-sidebar: var(--pd-black) !important;
-  --spice-player: var(--pd-black) !important;
-  --spice-shadow: var(--pd-black) !important;
-  --spice-card: var(--pd-purple) !important;
-  --spice-selected-row: var(--pd-purple) !important;
-  --spice-button: var(--pd-purple) !important;
-  --spice-button-active: var(--pd-purple-light) !important;
-  --spice-button-disabled: var(--pd-grey) !important;
-  --spice-tab-active: var(--pd-purple) !important;
-  --spice-notification: var(--pd-purple) !important;
-  --spice-notification-error: var(--pd-red) !important;
-  --spice-misc: #FFFFFF !important;
+  /* Hue the artwork is tinted to (section 4). extensions/purpleDrankTint.js
+     keeps this in step with the accent; without it the tint stays purple. */
+  --pd-tint-hue: 230deg;
 }
 
 /* ===========================================================================
@@ -109,12 +94,13 @@ h3,
 }
 
 /* ===========================================================================
-   4. Purple-tinted artwork
-   Every image is flattened to one hue and pushed to purple. Marketplace
-   previews stay untinted so you can still see what you're installing.
+   4. Tinted artwork
+   Every image is flattened to one hue and pushed to the accent colour.
+   Marketplace previews stay untinted so you can still see what you're
+   installing.
    ======================================================================== */
 img {
-  filter: grayscale(1) sepia(1) hue-rotate(230deg) saturate(4) brightness(0.7) contrast(1.05) !important;
+  filter: grayscale(1) sepia(1) hue-rotate(var(--pd-tint-hue)) saturate(4) brightness(0.7) contrast(1.05) !important;
 }
 [class*="marketplace"] img {
   filter: none !important;
@@ -191,37 +177,37 @@ body:has(aside.spicy-dynamic-bg-in-this)
    8. Spotify chrome and add-on tweaks
    ======================================================================== */
 
-/* ---- Purple top bar  ------------------------------
-   Bar in the accent purple; the tiles on it (home, search box, cart, profile)
-   in a darker purple so they still read as separate buttons. Spotify draws
+/* ---- Accent top bar  ------------------------------
+   Bar in the accent colour; the tiles on it (home, search box, cart, profile)
+   in a darker shade so they still read as separate buttons. Spotify draws
    those tiles with the elevated background tokens, so overriding the tokens
    inside the bar recolours exactly the elements that already had a tile. */
 .Root__globalNav,
 .global-nav-bar {
-  background-color: var(--pd-purple) !important;
-  --background-base: var(--pd-purple) !important;
-  --background-elevated-base: var(--pd-purple-dark) !important;
-  --background-elevated-highlight: var(--pd-purple-hover) !important;
-  --background-elevated-press: var(--pd-purple-press) !important;
-  --background-tinted-base: var(--pd-purple-dark) !important;
-  --background-tinted-highlight: var(--pd-purple-hover) !important;
-  --background-tinted-press: var(--pd-purple-press) !important;
+  background-color: var(--pd-accent) !important;
+  --background-base: var(--pd-accent) !important;
+  --background-elevated-base: var(--pd-accent-dark) !important;
+  --background-elevated-highlight: var(--pd-accent-hover) !important;
+  --background-elevated-press: var(--pd-accent-press) !important;
+  --background-tinted-base: var(--pd-accent-dark) !important;
+  --background-tinted-highlight: var(--pd-accent-hover) !important;
+  --background-tinted-press: var(--pd-accent-press) !important;
 }
 .Root__globalNav .main-globalNav-searchInputContainer,
 .Root__globalNav .main-globalNav-searchInputContainer input {
-  background-color: var(--pd-purple-dark) !important;
+  background-color: var(--pd-accent-dark) !important;
 }
 .Root__globalNav .main-globalNav-searchInputContainer input::placeholder {
-  color: var(--pd-lavender-pale) !important;
+  color: var(--pd-tint-pale) !important;
 }
 
-/* ---- Light purple Spicy Lyrics page  --------------
+/* ---- Light Spicy Lyrics page  ---------------------
    Full lyrics page only. The background is a <canvas>, which cannot show a
    ::after overlay, so tint the element itself with a filter: flatten to one
-   hue, rotate it to purple, then lift the brightness so it reads light. The
-   cover's motion still shows through as lighter/darker purple. */
+   hue, rotate it to the accent, then lift the brightness so it reads light. The
+   cover's motion still shows through as lighter/darker shades. */
 #SpicyLyricsPage .spicy-dynamic-bg {
-  filter: grayscale(1) sepia(1) hue-rotate(225deg) saturate(2.2) brightness(1.55) !important;
+  filter: grayscale(1) sepia(1) hue-rotate(calc(var(--pd-tint-hue) - 5deg)) saturate(2.2) brightness(1.55) !important;
 }
 
 /* ---- Black Now Playing side panel  -----------------
@@ -237,31 +223,31 @@ aside .spicy-dynamic-bg {
 }
 
 /* Static Background = Color: Spicy Lyrics fills this with a colour taken from
-   the cover (often near-black). Pin it to a flat light purple instead, and skip
-   the canvas tint filter above so the purple is shown as-is. */
+   the cover (often near-black). Pin it to a flat light accent instead, and skip
+   the canvas tint filter above so the colour is shown as-is. */
 #SpicyLyricsPage .spicy-dynamic-bg.ColorBackground,
 #SpicyLyricsPage .spicy-dynamic-bg.StaticBackground {
-  background-color: var(--pd-lavender) !important;
+  background-color: var(--pd-tint) !important;
   background-image: none !important;
   filter: none !important;
 }
 
-/* ---- Purple Cover Ambience fade  -------------------
+/* ---- Accent Cover Ambience fade  -------------------
    The Cover Ambience extension sets its fade colour inline from the album cover.
-   Pin it to the theme purple; the fade to black still comes from the extension. */
+   Pin it to the accent; the fade to black still comes from the extension. */
 .main-nowPlayingBar-container,
 [data-testid="now-playing-bar"] > div {
-  --cover-ambience-color: var(--pd-purple) !important;
-  --cover-ambience-color-before: var(--pd-purple) !important;
+  --cover-ambience-color: var(--pd-accent) !important;
+  --cover-ambience-color-before: var(--pd-accent) !important;
 }
 
-/* ---- Readable Spicy Lyrics page buttons on light purple ------------------- */
+/* ---- Readable Spicy Lyrics page buttons on the light page ----------------- */
 #SpicyLyricsPage .ViewControls .ViewControl {
-  color: var(--pd-purple-deep) !important;
+  color: var(--pd-accent-deep) !important;
   background: rgba(255, 255, 255, 0.45) !important;
 }
 #SpicyLyricsPage .ViewControls .ViewControl:hover {
-  color: var(--pd-purple-ink) !important;
+  color: var(--pd-accent-ink) !important;
   background: rgba(255, 255, 255, 0.65) !important;
 }
 #SpicyLyricsPage .ViewControls .ViewControl svg {

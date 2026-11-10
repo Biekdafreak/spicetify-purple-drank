@@ -1,15 +1,16 @@
 [
   {
     "name": "Biekdafreak - Purple Drank",
-    "description": "Black and purple, square edges. Purple top bar, artist-collage Liked Songs banner, purple cup Marketplace button. With Spicy Lyrics: light purple lyrics page and black Now Playing panel. With Cover Ambience: purple playbar fade.",
+    "description": "Black with one accent colour, square edges. Six colour schemes: purple, grape, berry, blue-razz, cherry, lime. Covers tinted to match, accent top bar, artist-collage Liked Songs banner. Styles Spicy Lyrics and Cover Ambience if you use them.",
     "preview": "preview.png",
     "readme": "README.md",
     "usercss": "user.css",
     "schemes": "color.ini",
     "include": [
-      "https://raw.githubusercontent.com/Biekdafreak/spicetify-purple-drank/main/extensions/likedSongsBanner.js"
+      "https://raw.githubusercontent.com/Biekdafreak/spicetify-purple-drank/main/extensions/likedSongsBanner.js",
+      "https://raw.githubusercontent.com/Biekdafreak/spicetify-purple-drank/main/extensions/purpleDrankTint.js"
     ],
     "authors": [{ "name": "Biekdafreak", "url": "https://github.com/Biekdafreak" }],
-    "tags": ["purple", "dark", "black", "flat", "minimal", "spicy-lyrics"]
+    "tags": ["purple", "dark", "black", "flat", "minimal", "color-schemes", "spicy-lyrics"]
   }
 ]
